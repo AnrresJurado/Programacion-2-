@@ -1,0 +1,321 @@
+<odoo>
+    <data>
+
+        <!-- =============================== -->
+        <!--            LIBROS              -->
+        <!-- =============================== -->
+
+        <!-- LISTA -->
+        <record id="view_biblioteca_libro_list" model="ir.ui.view">
+            <field name="name">biblioteca.libro.list</field>
+            <field name="model">biblioteca.libro</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="codigo_libro"/>
+                    <field name="titulo"/>
+                    <field name="author"/>
+                    <field name="publicacion"/>
+                    <field name="ejemplares"/>
+                    <field name="costo"/>
+                    <field name="isbn"/>
+                    <field name="genero_id"/>
+                    <field name="editorial_id"/>
+                    <field name="ubicacion_id"/>
+                    <field name="disponi"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- FORM -->
+        <record id="view_biblioteca_libro_form" model="ir.ui.view">
+            <field name="name">biblioteca.libro.form</field>
+            <field name="model">biblioteca.libro</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="codigo_libro" readonly="1"/>
+                            <field name="titulo"/>
+                            <field name="author"/>
+                            <field name="publicacion"/>
+                            <field name="ejemplares"/>
+                            <field name="costo" readonly="1"/>
+                            <field name="isbn"/>
+                            <field name="genero_id"/>
+                            <field name="editorial_id"/>
+                            <field name="ubicacion_id"/>
+                            <field name="disponi"/>
+                            <field name="description"/>
+                        </group>
+
+                        <separator string="Importar desde OpenLibrary"/>
+
+                        <group>
+                            <button name="importar_desde_openlibrary"
+                                    type="object"
+                                    string="Buscar"
+                                    class="btn-primary"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- =============================== -->
+        <!--            USUARIOS             -->
+        <!-- =============================== -->
+
+        <record id="biblioteca_usuarios_list" model="ir.ui.view">
+            <field name="name">biblioteca.usuarios.list</field>
+            <field name="model">biblioteca.usuarios</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="firstname"/>
+                    <field name="lastname"/>
+                    <field name="identificacion"/>
+                    <field name="telefono"/>
+                    <field name="email"/>
+                    <field name="direccion"/>
+                    <field name="fecha_nacimiento"/>
+                    <field name="activo"/>
+                    <field name="prestamos"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="biblioteca_usuarios_form" model="ir.ui.view">
+            <field name="name">biblioteca.usuarios.form</field>
+            <field name="model">biblioteca.usuarios</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="firstname"/>
+                            <field name="lastname"/>
+                            <field name="identificacion"/>
+                            <field name="telefono"/>
+                            <field name="email"/>
+                            <field name="direccion"/>
+                            <field name="fecha_nacimiento"/>
+                            <field name="activo"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Préstamos">
+                                <field name="prestamos" readonly="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- =============================== -->
+        <!--            PRÉSTAMOS            -->
+        <!-- =============================== -->
+
+        <record id="biblioteca_prestamo_list" model="ir.ui.view">
+            <field name="name">biblioteca.prestamo.list</field>
+            <field name="model">biblioteca.prestamo</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="fecha_prestamo"/>
+                    <field name="fecha_devolucion"/>
+                    <field name="libro_id"/>
+                    <field name="usuario_id"/>
+                    <field name="fecha_maxima"/>
+                    <field name="estado"/>
+                    <field name="multa_generada"/>
+                    <field name="monto_multa"/>
+                    <field name="multa_id" options="{'no_open': False}"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="biblioteca_prestamo_form" model="ir.ui.view">
+            <field name="name">biblioteca.prestamo.form</field>
+            <field name="model">biblioteca.prestamo</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <header>
+                        <button string="Prestar"
+                                name="generar_prestamo"
+                                type="object"
+                                modifiers='{"invisible": [["estado", "in", ["p","d","m"]]]}'/>
+
+                        <button string="Cerrar Préstamo"
+                                name="%(biblioteca_wizard_action_window)d"
+                                type="action"
+                                class="btn-primary"
+                                modifiers='{"invisible": [["estado","!=", "p"]]}'/>
+
+                        <field name="estado" widget="statusbar"/>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="fecha_prestamo" readonly="1"/>
+                            <field name="fecha_devolucion"/>
+
+                            <field name="libro_id"/>
+                            <field name="usuario_id"/>
+
+                            <separator string="Estado del Libro"/>
+                            <field name="libro_disponible" readonly="1"/>
+
+                            <separator string="Estado del Usuario"/>
+                            <field name="usuario_multas" readonly="1"/>
+                            <field name="usuario_multas_pend" readonly="1"/>
+
+                            <field name="fecha_maxima" readonly="1"/>
+
+                            <field name="multa_generada" readonly="1"/>
+                            <field name="monto_multa" readonly="1"/>
+
+                            <field name="multa_id" readonly="1" options="{'no_open': False}"/>
+
+                            <field name="motivo_multa"
+                                   modifiers='{"required": [["estado","=","m"]]}'/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <!-- =============================== -->
+        <!--              MULTAS             -->
+        <!-- =============================== -->
+
+        <record id="biblioteca_multa_list" model="ir.ui.view">
+            <field name="name">biblioteca.multa.list</field>
+            <field name="model">biblioteca.multa</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="usuario_id"/>
+                    <field name="name_multa"/>
+                    <field name="multa"/>
+                    <field name="valor_multa"/>
+                    <field name="fecha_multa"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="biblioteca_multa_form" model="ir.ui.view">
+            <field name="name">biblioteca.multa.form</field>
+            <field name="model">biblioteca.multa</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="usuario_id" readonly="1"/>
+                            <field name="name_multa" readonly="1"/>
+                            <field name="multa" readonly="1"/>
+                            <field name="valor_multa" readonly="1"/>
+                            <field name="fecha_multa"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- =============================== -->
+        <!--               WIZARD            -->
+        <!-- =============================== -->
+
+        <record id="biblioteca_wizard_form" model="ir.ui.view">
+            <field name="name">biblioteca.wizard.form</field>
+            <field name="model">biblioteca.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Finalizar Préstamo">
+                    <group>
+                        <label for="prestamo_id" string="Préstamo seleccionado"/>
+                        <field name="prestamo_id" readonly="1"/>
+                        <separator string="Evaluación del Libro"/>
+                        <field name="evaluacion_libro" widget="radio"/>
+                        <separator string="Observaciones"/>
+                        <field name="observaciones"/>
+                    </group>
+
+                    <footer>
+                        <button string="Aceptar"
+                                name="cerrar_prestamo"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Cancelar" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="biblioteca_wizard_action_window" model="ir.actions.act_window">
+            <field name="name">Evaluación de Libro</field>
+            <field name="res_model">biblioteca.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">
+                {"default_prestamo_id": active_id}
+            </field>
+        </record>
+
+
+        <!-- =============================== -->
+        <!--               MENÚ              -->
+        <!-- =============================== -->
+
+        <menuitem name="Biblioteca" id="biblioteca_menu"/>
+
+        <menuitem name="Libros"
+                  id="biblioteca_libro_menu"
+                  parent="biblioteca_menu"
+                  action="biblioteca_libro_action_window"/>
+
+        <menuitem name="Usuarios"
+                  id="biblioteca_usuarios_menu"
+                  parent="biblioteca_menu"
+                  action="biblioteca_usuarios_action_window"/>
+
+        <menuitem name="Préstamos"
+                  id="biblioteca_prestamo_menu"
+                  parent="biblioteca_menu"
+                  action="biblioteca_prestamo_action_window"/>
+
+        <menuitem name="Multas"
+                  id="biblioteca_multa_menu"
+                  parent="biblioteca_menu"
+                  action="biblioteca_multa_action_window"/>
+
+        <!-- ACCIONES -->
+        <record id="biblioteca_libro_action_window" model="ir.actions.act_window">
+            <field name="name">Libros</field>
+            <field name="res_model">biblioteca.libro</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="biblioteca_usuarios_action_window" model="ir.actions.act_window">
+            <field name="name">Usuarios</field>
+            <field name="res_model">biblioteca.usuarios</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="biblioteca_prestamo_action_window" model="ir.actions.act_window">
+            <field name="name">Préstamos</field>
+            <field name="res_model">biblioteca.prestamo</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="biblioteca_multa_action_window" model="ir.actions.act_window">
+            <field name="name">Multas</field>
+            <field name="res_model">biblioteca.multa</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

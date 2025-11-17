@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+
+        <!--      VISTA FORM DEL WIZARD      -->
+        <record id="biblioteca_wizard_form" model="ir.ui.view">
+            <field name="name">biblioteca.wizard.form</field>
+            <field name="model">biblioteca.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Finalizar Préstamo">
+
+                    <group>
+                        <!-- Préstamo al que aplica el cierre -->
+                        <label for="prestamo_id" string="Préstamo seleccionado"/>
+                        <field name="prestamo_id" readonly="1"/>
+
+                        <separator string="Evaluación del Libro"/>
+
+                        <field name="evaluacion_libro" widget="radio"/>
+
+                        <separator string="Observaciones"/>
+
+                        <field name="observaciones"/>
+                    </group>
+
+                    <footer>
+                        <button string="Aceptar"
+                                type="object"
+                                name="cerrar_prestamo"
+                                class="btn-primary"/>
+
+                        <button string="Cancelar"
+                                special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <!--     ACCIÓN QUE ABRE EL WIZARD   -->
+        <record id="biblioteca_wizard_action_window" model="ir.actions.act_window">
+            <field name="name">Evaluación de Libro</field>
+            <field name="res_model">biblioteca.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">
+                {
+                    "default_prestamo_id": active_id,
+                    "active_model": "biblioteca.prestamo"
+                }
+            </field>
+        </record>
+
+    </data>
+</odoo>

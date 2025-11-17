@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+
+    <!-- LISTA -->
+    <record id="view_biblioteca_libro_list" model="ir.ui.view">
+        <field name="name">biblioteca.libro.list</field>
+        <field name="model">biblioteca.libro</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="codigo_libro"/>
+                <field name="titulo"/>
+                <field name="author"/>
+                <field name="publicacion"/>
+                <field name="ejemplares"/>
+                <field name="costo"/>
+                <field name="isbn"/>
+                <field name="genero_id"/>
+                <field name="editorial_id"/>
+                <field name="ubicacion_id"/> <!-- CAMBIO -->
+                <field name="disponi"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORMULARIO -->
+    <record id="view_biblioteca_libro_form" model="ir.ui.view">
+        <field name="name">biblioteca.libro.form</field>
+        <field name="model">biblioteca.libro</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="codigo_libro" readonly="1"/>
+                        <field name="titulo"/>
+                        <field name="author"/>
+                        <field name="publicacion"/>
+                        <field name="ejemplares"/>
+                        <field name="costo" readonly="1"/>
+                        <field name="isbn"/>
+                        <field name="genero_id"/>
+                        <field name="editorial_id"/>
+                        <field name="ubicacion_id"/> <!-- CAMBIO -->
+                        <field name="disponi"/>
+                        <field name="description"/>
+                    </group>
+
+                    <separator string="Importar desde OpenLibrary"/>
+
+                    <group>
+                        <button name="importar_desde_openlibrary"
+                                type="object"
+                                string="Buscar"
+                                class="btn-primary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACCIÓN -->
+    <record id="biblioteca_libro_action_window" model="ir.actions.act_window">
+        <field name="name">Libros</field>
+        <field name="res_model">biblioteca.libro</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+
+    <record id="biblioteca_usuarios_list" model="ir.ui.view">
+        <field name="name">biblioteca.usuarios.list</field>
+        <field name="model">biblioteca.usuarios</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="firstname"/>
+                <field name="lastname"/>
+                <field name="identificacion"/>
+                <field name="telefono"/>
+                <field name="email"/>
+                <field name="direccion"/>
+                <field name="fecha_nacimiento"/>
+                <field name="activo"/>
+                <field name="prestamos"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="biblioteca_usuarios_form" model="ir.ui.view">
+        <field name="name">biblioteca.usuarios.form</field>
+        <field name="model">biblioteca.usuarios</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="firstname"/>
+                        <field name="lastname"/>
+                        <field name="identificacion"/>
+                        <field name="telefono"/>
+                        <field name="email"/>
+                        <field name="direccion"/>
+                        <field name="fecha_nacimiento"/>
+                        <field name="activo"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Préstamos">
+                            <field name="prestamos" readonly="1"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblioteca_usuarios_action_window" model="ir.actions.act_window">
+        <field name="name">Usuarios</field>
+        <field name="res_model">biblioteca.usuarios</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

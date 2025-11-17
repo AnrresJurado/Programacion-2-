@@ -1,0 +1,23 @@
+<odoo>
+  <data>
+
+    <menuitem name="Biblioteca" id="biblioteca_menu"/>
+
+    <menuitem name="Libros" id="biblioteca_libro_menu"
+              parent="biblioteca_menu"
+              action="biblioteca_libro_action_window"/>
+
+    <menuitem name="Usuarios" id="biblioteca_usuarios_menu"
+              parent="biblioteca_menu"
+              action="biblioteca_usuarios_action_window"/>
+
+    <menuitem name="Préstamos" id="biblioteca_prestamo_menu"
+              parent="biblioteca_menu"
+              action="biblioteca_prestamo_action_window"/>
+
+    <menuitem name="Multas" id="biblioteca_multa_menu"
+              parent="biblioteca_menu"
+              action="biblioteca_multa_action_window"/>
+
+  </data>
+</odoo>

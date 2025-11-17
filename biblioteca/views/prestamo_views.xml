@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+
+    <record id="biblioteca_prestamo_list" model="ir.ui.view">
+        <field name="name">biblioteca.prestamo.list</field>
+        <field name="model">biblioteca.prestamo</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="fecha_prestamo"/>
+                <field name="fecha_devolucion"/>
+                <field name="libro_id"/>
+                <field name="usuario_id"/>
+                <field name="fecha_maxima"/>
+                <field name="estado"/>
+                <field name="multa_generada"/>
+                <field name="monto_multa"/>
+                <field name="multa_id" options="{'no_open': False}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="biblioteca_prestamo_form" model="ir.ui.view">
+        <field name="name">biblioteca.prestamo.form</field>
+        <field name="model">biblioteca.prestamo</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+                    <button string="Prestar"
+                            type="object"
+                            name="generar_prestamo"/>
+
+                    <button string="Cerrar Préstamo"
+                            name="%(biblioteca_wizard_action_window)d"
+                            type="action"
+                            class="btn-primary"/>
+
+                    <field name="estado" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <group>
+
+                        <field name="name" readonly="1"/>
+                        <field name="fecha_prestamo" readonly="1"/>
+                        <field name="fecha_devolucion"/>
+
+                        <field name="libro_id"/>
+                        <field name="usuario_id"/>
+
+                        <separator string="Estado del Libro"/>
+                        <field name="libro_disponible" readonly="1"/>
+
+                        <separator string="Estado del Usuario"/>
+                        <field name="usuario_multas" readonly="1"/>
+                        <field name="usuario_multas_pend" readonly="1"/>
+
+                        <field name="fecha_maxima" readonly="1"/>
+
+                        <field name="multa_generada" readonly="1"/>
+                        <field name="monto_multa" readonly="1"/>
+
+                        <field name="multa_id" readonly="1" options="{'no_open': False}"/>
+
+                        <field name="motivo_multa"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblioteca_prestamo_action_window" model="ir.actions.act_window">
+        <field name="name">Préstamos</field>
+        <field name="res_model">biblioteca.prestamo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>
